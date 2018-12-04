@@ -25,6 +25,7 @@ import com.google.api.services.vision.v1.model.AnnotateImageRequest;
 import com.google.cloud.vision.v1.AnnotateImageResponse;
 import com.google.api.services.vision.v1.model.BatchAnnotateImagesResponse;
 import com.google.cloud.vision.v1.EntityAnnotation;
+import com.google.cloud.vision.v1.Feature.Type;
 
 import com.google.cloud.vision.v1.ImageAnnotatorClient;
 import com.google.common.collect.Lists;
@@ -123,61 +124,61 @@ class OtherDemo extends AppCompatActivity {
 
     }
 }
-//class QuickstartSample {
-//    private static void authExplicit(String jsonPath) throws IOException {
-//        // You can specify a credential file by providing a path to GoogleCredentials.
-//        // Otherwise credentials are read from the GOOGLE_APPLICATION_CREDENTIALS environment variable.
-//        GoogleCredentials credentials = GoogleCredentials.fromStream(new FileInputStream(jsonPath))
-//                .createScoped(Lists.newArrayList("https://www.googleapis.com/auth/cloud-platform"));
-//        Storage storage = StorageOptions.newBuilder().setCredentials(credentials).build().getService();
-//
-//        System.out.println("Buckets:");
-//        Page<Bucket> buckets = storage.list();
-//        for (Bucket bucket : buckets.iterateAll()) {
-//            System.out.println(bucket.toString());
-//        }
-//    }
-//    public static void main(String... args) throws Exception {
-//        //authExplicit("C:/Users/Josiah-David Sykes/Documents/Senior_Design/concious-gps-8966095864d3.json");
-//        // Instantiates a client
-//        try (ImageAnnotatorClient vision = ImageAnnotatorClient.create()) {
-//
-//            // The path to the image file to annotate
-//            String fileName = "./resources/wakeupcat.jpg";
-//
-//            // Reads the image file into memory
-//            Path path = Paths.get(fileName);
-//            byte[] data = Files.readAllBytes(path);
-//            ByteString imgBytes = ByteString.copyFrom(data);
-//
-//            // Builds the image annotation request
-//            List<AnnotateImageRequest> requests = new ArrayList<>();
-//            Image img = Image.newBuilder().setContent(imgBytes).build();
-//            Feature feat = Feature.newBuilder().setType(Type.LABEL_DETECTION).build();
-//            AnnotateImageRequest request = AnnotateImageRequest.newBuilder()
-//                    .addFeatures(feat)
-//                    .setImage(img)
-//                    .build();
-//            requests.add(request);
-//
-//            // Performs label detection on the image file
-//            BatchAnnotateImagesResponse response = vision.batchAnnotateImages(requests);
-//            List<AnnotateImageResponse> responses = response.getResponsesList();
-//
-//            for (AnnotateImageResponse res : responses) {
-//                if (res.hasError()) {
-//                    System.out.printf("Error: %s\n", res.getError().getMessage());
-//                    return;
-//                }
-//
-//                for (EntityAnnotation annotation : res.getLabelAnnotationsList()) {
-//                    annotation.getAllFields().forEach((k, v) ->
-//                            System.out.printf("%s : %s\n", k, v.toString()));
-//                }
-//            }
-//        }
-//    }
-//}
+class QuickstartSample {
+    private static void authExplicit(String jsonPath) throws IOException {
+        // You can specify a credential file by providing a path to GoogleCredentials.
+        // Otherwise credentials are read from the GOOGLE_APPLICATION_CREDENTIALS environment variable.
+        GoogleCredentials credentials = GoogleCredentials.fromStream(new FileInputStream(jsonPath))
+                .createScoped(Lists.newArrayList("https://www.googleapis.com/auth/cloud-platform"));
+        Storage storage = StorageOptions.newBuilder().setCredentials(credentials).build().getService();
+
+        System.out.println("Buckets:");
+        Page<Bucket> buckets = storage.list();
+        for (Bucket bucket : buckets.iterateAll()) {
+            System.out.println(bucket.toString());
+        }
+    }
+    public static void main(String... args) throws Exception {
+        //authExplicit("C:/Users/Josiah-David Sykes/Documents/Senior_Design/concious-gps-8966095864d3.json");
+        // Instantiates a client
+        try (ImageAnnotatorClient vision = ImageAnnotatorClient.create()) {
+
+            // The path to the image file to annotate
+            String fileName = "./resources/wakeupcat.jpg";
+
+            // Reads the image file into memory
+            Path path = Paths.get(fileName);
+            byte[] data = Files.readAllBytes(path);
+            ByteString imgBytes = ByteString.copyFrom(data);
+
+            // Builds the image annotation request
+            List<com.google.cloud.vision.v1.AnnotateImageRequest> requests = new ArrayList<>();
+            com.google.cloud.vision.v1.Image img = com.google.cloud.vision.v1.Image.newBuilder().setContent(imgBytes).build();
+            com.google.cloud.vision.v1.Feature feat = com.google.cloud.vision.v1.Feature.newBuilder().setType(Type.LABEL_DETECTION).build();
+            com.google.cloud.vision.v1.AnnotateImageRequest request = com.google.cloud.vision.v1.AnnotateImageRequest.newBuilder()
+                    .addFeatures(feat)
+                    .setImage(img)
+                    .build();
+            requests.add(request);
+
+            // Performs label detection on the image file
+            com.google.cloud.vision.v1.BatchAnnotateImagesResponse response = vision.batchAnnotateImages(requests);
+            List<AnnotateImageResponse> responses = response.getResponsesList();
+
+            for (AnnotateImageResponse res : responses) {
+                if (res.hasError()) {
+                    System.out.printf("Error: %s\n", res.getError().getMessage());
+                    return;
+                }
+
+                for (EntityAnnotation annotation : res.getLabelAnnotationsList()) {
+                    annotation.getAllFields().forEach((k, v) ->
+                            System.out.printf("%s : %s\n", k, v.toString()));
+                }
+            }
+        }
+    }
+}
 public class MainActivity extends AppCompatActivity {
 
     // Used to load the 'native-lib' library on application startup.
