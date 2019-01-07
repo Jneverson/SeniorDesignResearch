@@ -1,0 +1,141 @@
+
+-----THIS IS AN OLD ATTEMPT TO USE THE VISION LIBRARY------------------------------------------------------------------------
+--By Josiah
+// Imports the Google Cloud client library
+class OtherDemo extends AppCompatActivity {
+
+    byte[] photoData;
+    public void main() throws IOException {
+        Vision.Builder visionBuilder = new Vision.Builder(
+                new NetHttpTransport(),
+                new AndroidJsonFactory(),
+                null);
+
+        visionBuilder.setVisionRequestInitializer(
+                new VisionRequestInitializer("AIzaSyBZovOlTaA2JjUC7IN0XY3HlqA257Uhp0c"));
+
+        Vision vision = visionBuilder.build();
+
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                // Convert photo to byte array
+                InputStream inputStream =
+                        getResources().openRawResource(+ R.drawable.apollo);
+                try {
+                    OtherDemo.this.photoData = IOUtils.toByteArray(inputStream);
+
+                    inputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                // More code here
+            }
+        });
+
+        Image inputImage = new Image();
+        inputImage.encodeContent(photoData);
+        Feature desiredFeature = new Feature();
+        desiredFeature.setType("FACE_DETECTION");
+
+        AnnotateImageRequest request = new AnnotateImageRequest();
+        request.setImage(inputImage);
+        request.setFeatures(Arrays.asList(desiredFeature));
+
+        BatchAnnotateImagesRequest batchRequest =
+                new BatchAnnotateImagesRequest();
+
+        batchRequest.setRequests(Arrays.asList(request));
+
+        BatchAnnotateImagesResponse batchResponse =
+                vision.images().annotate(batchRequest).execute();
+
+        List<FaceAnnotation> faces = batchResponse.getResponses()
+                .get(0).getFaceAnnotations();
+
+        // Count faces
+        int numberOfFaces = faces.size();
+
+// Get joy likelihood for each face
+        String likelihoods = "";
+        for(int i=0; i<numberOfFaces; i++) {
+            likelihoods += "\n It is " +
+                    faces.get(i).getJoyLikelihood() +
+                    " that face " + i + " is happy";
+        }
+
+// Concatenate everything
+        final String message =
+                "This photo has " + numberOfFaces + " faces" + likelihoods;
+
+// Display toast on UI thread
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(getApplicationContext(),
+                        message, Toast.LENGTH_LONG).show();
+            }
+        });
+
+
+
+
+    }
+}
+class QuickstartSample {
+    private static void authExplicit(String jsonPath) throws IOException {
+        // You can specify a credential file by providing a path to GoogleCredentials.
+        // Otherwise credentials are read from the GOOGLE_APPLICATION_CREDENTIALS environment variable.
+        GoogleCredentials credentials = GoogleCredentials.fromStream(new FileInputStream(jsonPath))
+                .createScoped(Lists.newArrayList("https://www.googleapis.com/auth/cloud-platform"));
+        Storage storage = StorageOptions.newBuilder().setCredentials(credentials).build().getService();
+
+        System.out.println("Buckets:");
+        Page<Bucket> buckets = storage.list();
+        for (Bucket bucket : buckets.iterateAll()) {
+            System.out.println(bucket.toString());
+        }
+    }
+    public static void main(String... args) throws Exception {
+        //authExplicit("C:/Users/Josiah-David Sykes/Documents/Senior_Design/concious-gps-8966095864d3.json");
+        // Instantiates a client
+        try (ImageAnnotatorClient vision = ImageAnnotatorClient.create()) {
+
+            // The path to the image file to annotate
+            String fileName = "./resources/wakeupcat.jpg";
+
+            // Reads the image file into memory
+            Path path = Paths.get(fileName);
+            byte[] data = Files.readAllBytes(path);
+            ByteString imgBytes = ByteString.copyFrom(data);
+
+            // Builds the image annotation request
+            List<com.google.cloud.vision.v1.AnnotateImageRequest> requests = new ArrayList<>();
+            com.google.cloud.vision.v1.Image img = com.google.cloud.vision.v1.Image.newBuilder().setContent(imgBytes).build();
+            com.google.cloud.vision.v1.Feature feat = com.google.cloud.vision.v1.Feature.newBuilder().setType(Type.LABEL_DETECTION).build();
+            com.google.cloud.vision.v1.AnnotateImageRequest request = com.google.cloud.vision.v1.AnnotateImageRequest.newBuilder()
+                    .addFeatures(feat)
+                    .setImage(img)
+                    .build();
+            requests.add(request);
+
+            // Performs label detection on the image file
+            com.google.cloud.vision.v1.BatchAnnotateImagesResponse response = vision.batchAnnotateImages(requests);
+            List<AnnotateImageResponse> responses = response.getResponsesList();
+
+            for (AnnotateImageResponse res : responses) {
+                if (res.hasError()) {
+                    System.out.printf("Error: %s\n", res.getError().getMessage());
+                    return;
+                }
+
+                for (EntityAnnotation annotation : res.getLabelAnnotationsList()) {
+                    annotation.getAllFields().forEach((k, v) ->
+                            System.out.printf("%s : %s\n", k, v.toString()));
+                }
+            }
+        }
+    }
+}
+-----------------------------------------------------------------------------------------------------------------------------------------------------
