@@ -8,12 +8,11 @@
 
     <Button
         android:id="@+id/button"
-        android:layout_width="247dp"
-        android:layout_height="227dp"
-        android:layout_marginTop="140dp"
+        android:layout_width="93dp"
+        android:layout_height="38dp"
+        android:layout_marginTop="456dp"
         android:onClick="onClick"
-        android:text="Edit as needed, currently links into backend java file"
+        android:text="Button"
         app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="69dp" />
-
+        tools:layout_editor_absoluteX="146dp" />
 </android.support.constraint.ConstraintLayout>
