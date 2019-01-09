@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
     int buttonCounter = 0;
@@ -36,6 +35,8 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+        //This change is only to test an android studio commit
+        System.out.println("Test");
     }
 
     /**
