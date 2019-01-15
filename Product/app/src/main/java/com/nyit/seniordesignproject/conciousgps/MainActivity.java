@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 public class MainActivity extends AppCompatActivity {
-    int buttonCounter = 0;
+    private int buttonCounter = 0;
 
     // Used to load the 'native-lib' library on application startup.
 //    static {
@@ -35,8 +35,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-        //This change is only to test an android studio commit
-        System.out.println("Test");
     }
 
     /**
