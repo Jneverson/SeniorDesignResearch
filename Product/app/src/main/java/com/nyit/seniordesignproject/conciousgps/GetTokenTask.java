@@ -1,3 +1,4 @@
+/*
 package com.nyit.seniordesignproject.conciousgps;
 
 import android.accounts.Account;
@@ -36,10 +37,12 @@ public class GetTokenTask extends AsyncTask<Void, Void, Void> {
         return null;
     }
 
-    /**
-     * Gets an authentication token from Google and handles any
-     * GoogleAuthException that may occur
-     */
+    */
+/**
+ * Gets an authentication token from Google and handles any
+ * GoogleAuthException that may occur
+ *//*
+
     private String fetchToken() throws IOException {
         String accessToken;
         try {
@@ -55,3 +58,4 @@ public class GetTokenTask extends AsyncTask<Void, Void, Void> {
         return null;
     }
 }
+*/

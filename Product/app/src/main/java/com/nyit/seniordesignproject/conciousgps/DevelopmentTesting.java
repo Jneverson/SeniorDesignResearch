@@ -1,3 +1,4 @@
+
 package com.nyit.seniordesignproject.conciousgps;
 //public class DevelopmentTesting extends AppCompatActivity {
 //    private int buttonCounter;
@@ -20,49 +21,10 @@ package com.nyit.seniordesignproject.conciousgps;
 //    }
 //}
 
-import android.Manifest;
-import android.accounts.Account;
-import android.accounts.AccountManager;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.net.Uri;
-import android.os.AsyncTask;
-import android.os.Bundle;
-import android.provider.MediaStore;
-import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import com.google.android.gms.auth.GoogleAuthUtil;
-import com.google.android.gms.common.AccountPicker;
-import com.google.api.client.extensions.android.http.AndroidHttp;
-import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
-import com.google.api.client.googleapis.json.GoogleJsonResponseException;
-import com.google.api.client.http.HttpTransport;
-import com.google.api.client.json.JsonFactory;
-import com.google.api.client.json.gson.GsonFactory;
-import com.google.api.services.vision.v1.Vision;
-import com.google.api.services.vision.v1.model.AnnotateImageRequest;
-import com.google.api.services.vision.v1.model.BatchAnnotateImagesRequest;
-import com.google.api.services.vision.v1.model.BatchAnnotateImagesResponse;
-import com.google.api.services.vision.v1.model.EntityAnnotation;
-import com.google.api.services.vision.v1.model.Feature;
-import com.google.api.services.vision.v1.model.Image;
-
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
 
 public class DevelopmentTesting extends AppCompatActivity {
+ /*   //private static final String CLOUD_VISION_API_KEY = BuildConfig.Cloud_Vision_API_KEY;
     static final int REQUEST_GALLERY_IMAGE = 10;
     static final int REQUEST_CODE_PICK_ACCOUNT = 11;
     static final int REQUEST_ACCOUNT_AUTHORIZATION = 12;
@@ -328,5 +290,6 @@ public class DevelopmentTesting extends AppCompatActivity {
     public void onTokenReceived(String token) {
         accessToken = token;
         launchImagePicker();
-    }
+    }*/
 }
+

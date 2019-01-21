@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 public class MainActivity extends AppCompatActivity {
-    private int buttonCounter = 0;
+    private static int buttonCounter = 0;
 
     // Used to load the 'native-lib' library on application startup.
 //    static {
@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
                 if (buttonCounter >= 5) {
                     buttonCounter = 0;
                     //setContentView(R.layout.development_testing);
-                    Intent nextScreen = new Intent(getApplicationContext(), DevelopmentTesting.class);
+                    Intent nextScreen = new Intent(getApplicationContext(), ImageRecognition.class);
                     startActivity(nextScreen);
                 }
             }
