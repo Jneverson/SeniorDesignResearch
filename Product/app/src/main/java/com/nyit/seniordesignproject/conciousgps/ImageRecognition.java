@@ -51,6 +51,7 @@ import com.google.api.services.vision.v1.model.Feature;
 import com.google.api.services.vision.v1.model.Image;
 
 import java.io.ByteArrayOutputStream;
+import java.io.Console;
 import java.io.File;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
@@ -254,7 +255,12 @@ public class ImageRecognition extends AppCompatActivity {
                 labelDetection.setType("LABEL_DETECTION");
                 labelDetection.setMaxResults(MAX_LABEL_RESULTS);
                 add(labelDetection);
-            }});
+            } /*{Feature textDetection = new Feature();
+                textDetection.setType("DOCUMENT_TEXT_DETECTION");
+                textDetection.setMaxResults(MAX_LABEL_RESULTS);
+                add(textDetection);}*/
+
+            });
 
             // Add the list of one thing to the request
             add(annotateImageRequest);
@@ -275,7 +281,7 @@ public class ImageRecognition extends AppCompatActivity {
 
         // Do the real work in an async task, because we need to use the network anyway
         try {
-            AsyncTask<Object, Void, String> labelDetectionTask = new LableDetectionTask(this, prepareAnnotationRequest(bitmap));
+            AsyncTask<Object, Void, String> labelDetectionTask = new LabelDetectionTask(this, prepareAnnotationRequest(bitmap));
             labelDetectionTask.execute();
         } catch (IOException e) {
             Log.d(TAG, "failed to make API request because of other IOException " +
@@ -303,11 +309,11 @@ public class ImageRecognition extends AppCompatActivity {
         return Bitmap.createScaledBitmap(bitmap, resizedWidth, resizedHeight, false);
     }
 
-    private static class LableDetectionTask extends AsyncTask<Object, Void, String> {
+    private static class LabelDetectionTask extends AsyncTask<Object, Void, String> {
         private final WeakReference<ImageRecognition> mActivityWeakReference;
         private Vision.Images.Annotate mRequest;
 
-        LableDetectionTask(ImageRecognition activity, Vision.Images.Annotate annotate) {
+        LabelDetectionTask(ImageRecognition activity, Vision.Images.Annotate annotate) {
             mActivityWeakReference = new WeakReference<>(activity);
             mRequest = annotate;
         }
