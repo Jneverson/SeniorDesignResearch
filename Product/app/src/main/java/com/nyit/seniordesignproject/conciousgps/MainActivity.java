@@ -3,11 +3,12 @@ package com.nyit.seniordesignproject.conciousgps;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 
 public class
 MainActivity extends AppCompatActivity {
     private static int buttonCounter = 0;
+    private static int mapCounter = 0;
+    private static int imageRecCounter = 0;
 
     // Used to load the 'native-lib' library on application startup.
 //    static {
@@ -24,16 +25,32 @@ MainActivity extends AppCompatActivity {
 //        tv.setText(stringFromJNI());
 
         //Code used to access development layout separate from UI
-        findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                buttonCounter++;
-                if (buttonCounter >= 5) {
-                    buttonCounter = 0;
-                    //setContentView(R.layout.development_testing);
-                    Intent nextScreen = new Intent(getApplicationContext(), ImageRecognition.class);
-                    startActivity(nextScreen);
-                }
+//        findViewById(R.id.imageRecButton).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                imageRecCounter++;
+//                if (imageRecCounter >= 5) {
+//                    imageRecCounter = 0;
+//                    //setContentView(R.layout.development_testing);
+//                    Intent nextScreen = new Intent(getApplicationContext(), ImageRecognition.class);
+//                    startActivity(nextScreen);
+//                }
+//            }
+//        });
+
+        findViewById(R.id.imageRecButton).setOnClickListener(b -> {
+            imageRecCounter++;
+            if (imageRecCounter >= 5) {
+                imageRecCounter = 0;
+                startActivity(new Intent(getApplicationContext(), ImageRecognition.class));
+            }
+        });
+
+        findViewById(R.id.mapsButton).setOnClickListener(b -> {
+            mapCounter++;
+            if (mapCounter >= 5) {
+                mapCounter = 0;
+                startActivity(new Intent(getApplicationContext(), MapsActivity.class));
             }
         });
     }

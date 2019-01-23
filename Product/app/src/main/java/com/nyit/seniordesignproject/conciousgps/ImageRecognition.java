@@ -51,7 +51,6 @@ import com.google.api.services.vision.v1.model.Feature;
 import com.google.api.services.vision.v1.model.Image;
 
 import java.io.ByteArrayOutputStream;
-import java.io.Console;
 import java.io.File;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
@@ -113,7 +112,7 @@ public class ImageRecognition extends AppCompatActivity {
         mImageDetails = findViewById(R.id.image_details);
         mMainImage = findViewById(R.id.main_image);
 
-        findViewById(R.id.button2).setOnClickListener(b -> {
+        findViewById(R.id.mainButton).setOnClickListener(b -> {
             buttonCounter++;
             if (buttonCounter >= 5) {
                 buttonCounter = 0;
