@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <paths>
-    <!--<external-path name="external_files"
-        path="C:\Users\Josiah-David Sykes\Pictures\20170629_224003.jpg" />-->
+    <external-path name="external_files"
+        path="." />
 </paths>

@@ -80,6 +80,15 @@ public class ImageRecognition extends AppCompatActivity {
         StringBuilder message = new StringBuilder("I found these things:\n\n");
 
         List<EntityAnnotation> labels = response.getResponses().get(0).getLabelAnnotations();
+
+//        for(int i = 0; i < labels.size(); i++)  {
+//            Log.d("Annotations", String.format("%s", labels.get(i)));
+//        }
+//
+//        for(int i = 0; i < response.getResponses().size(); i++)  {
+//            Log.d("Responses", String.format("%s\n", response.getResponses().get(i)));
+//        }
+
         if (labels != null) {
             for (EntityAnnotation label : labels) {
                 message.append(String.format(Locale.US, "%.3f: %s", label.getScore(), label.getDescription()));
@@ -249,15 +258,27 @@ public class ImageRecognition extends AppCompatActivity {
             annotateImageRequest.setImage(base64EncodedImage);
 
             // add the features we want
-            annotateImageRequest.setFeatures(new ArrayList<Feature>() {{
-                Feature labelDetection = new Feature();
-                labelDetection.setType("LABEL_DETECTION");
-                labelDetection.setMaxResults(MAX_LABEL_RESULTS);
-                add(labelDetection);
-            } /*{Feature textDetection = new Feature();
-                textDetection.setType("DOCUMENT_TEXT_DETECTION");
-                textDetection.setMaxResults(MAX_LABEL_RESULTS);
-                add(textDetection);}*/
+            annotateImageRequest.setFeatures(new ArrayList<Feature>() {
+                {
+                    Feature labelDetection = new Feature();
+                    //Feature textDetection = new Feature();
+                    //Feature landmarkDetection = new Feature();
+
+
+                    labelDetection.setType("LABEL_DETECTION");
+                    labelDetection.setMaxResults(MAX_LABEL_RESULTS);
+                    add(labelDetection);
+                    // textDetection.setType("FACE_DETECTION");
+                    //textDetection.setMaxResults(MAX_LABEL_RESULTS);
+                    // add(textDetection);
+//                    landmarkDetection.setType("LANDMARK_DETECTION");
+//                    landmarkDetection.setMaxResults(MAX_LABEL_RESULTS);
+//                    landmarkDetection.setMaxResults(MAX_LABEL_RESULTS);
+//                    add(landmarkDetection);
+//                    textDetection.setType("DOCUMENT_TEXT_DETECTION");
+//                    textDetection.setMaxResults(10);
+//                    add(textDetection);
+                }
 
             });
 
@@ -274,6 +295,7 @@ public class ImageRecognition extends AppCompatActivity {
         return annotateRequest;
     }
 
+    //FIXME
     private void callCloudVision(final Bitmap bitmap) {
         // Switch text to loading
         mImageDetails.setText(R.string.loading_message);

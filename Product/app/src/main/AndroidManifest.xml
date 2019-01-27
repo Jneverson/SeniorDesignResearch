@@ -43,8 +43,8 @@
             </intent-filter>
         </activity>
         <activity
-        android:name=".MapsActivity"
-        android:label="@string/title_activity_maps"
+            android:name=".MapsActivity"
+            android:label="@string/title_activity_maps"
             android:theme="@style/AppTheme.NoActionBar">
 
             <intent-filter>
@@ -78,8 +78,11 @@
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths" />
+
         </provider>
-        <uses-library android:name="org.apache.http.legacy" android:required="false" />
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
 
     </application>
 
