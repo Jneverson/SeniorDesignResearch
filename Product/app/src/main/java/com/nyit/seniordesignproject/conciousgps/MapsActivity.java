@@ -25,6 +25,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
+
+
+
     }
 
 
@@ -39,16 +42,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
      */
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
+       // mMap = googleMap;
 
         // Add a marker in Sydney and move the camera
-        //LatLng sydney = new LatLng(-34, 151);
-        //mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        //mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        //LatLng current = new LatLng(41, 74);
+        //mMap.addMarker(new MarkerOptions().position(current).title("Marker in Current Location"));
+       // mMap.moveCamera(CameraUpdateFactory.newLatLng(current));
 
         Uri gmmIntentUri = Uri.parse("google.navigation:q= Bus+ Station &mode=w");
         Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
         mapIntent.setPackage("com.google.android.apps.maps");
         startActivity(mapIntent);
     }
+
 }
