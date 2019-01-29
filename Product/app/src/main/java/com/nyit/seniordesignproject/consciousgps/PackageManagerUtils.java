@@ -1,4 +1,4 @@
-package com.nyit.seniordesignproject.conciousgps;
+package com.nyit.seniordesignproject.consciousgps;
 
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;

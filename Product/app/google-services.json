@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "400385096868",
+    "firebase_url": "https://concious-gps.firebaseio.com",
+    "project_id": "concious-gps",
+    "storage_bucket": "concious-gps.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:400385096868:android:1512ed48912b128c",
+        "android_client_info": {
+          "package_name": "com.nyit.seniordesignproject.consciousgps"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "400385096868-0u4tjn9lcqkgjnf7cg3agrvqrkosl5fs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBA1JDa2jBRhyP_TVdjMSbYUFHf-B3AKw8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

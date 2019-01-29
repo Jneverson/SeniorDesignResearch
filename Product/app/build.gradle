@@ -1,9 +1,10 @@
 apply plugin: 'com.android.application'
+
 android {
     compileSdkVersion 28
     defaultConfig {
-        applicationId "com.nyit.seniordesignproject.conciousgps"
-        minSdkVersion 25
+        applicationId "com.nyit.seniordesignproject.consciousgps"
+        minSdkVersion 26
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
@@ -70,4 +71,11 @@ dependencies {
     implementation 'com.google.apis:google-api-services-vision:v1-rev369-1.23.0'
     implementation 'com.google.android.gms:play-services-maps:16.0.0'
 
+    implementation 'com.google.firebase:firebase-core:16.0.6'
+    implementation 'com.google.firebase:firebase-ml-vision:18.0.2'
+    implementation 'com.google.firebase:firebase-ml-vision-image-label-model:17.0.2'
+    implementation 'com.google.firebase:firebase-ml-vision-face-model:17.0.2'
+    implementation 'com.google.firebase:firebase-ml-model-interpreter:16.2.4'
+
 }
+apply plugin: 'com.google.gms.google-services'

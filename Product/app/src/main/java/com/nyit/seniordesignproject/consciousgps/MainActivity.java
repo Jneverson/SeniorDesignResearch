@@ -1,4 +1,4 @@
-package com.nyit.seniordesignproject.conciousgps;
+package com.nyit.seniordesignproject.consciousgps;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -9,7 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 
 public class
 MainActivity extends AppCompatActivity {
-    private static int buttonCounter = 0;
+    //    private static int buttonCounter = 0;
     private static int mapCounter = 0;
     private static int imageRecCounter = 0;
 
@@ -45,7 +45,7 @@ MainActivity extends AppCompatActivity {
             imageRecCounter++;
             if (imageRecCounter >= 5) {
                 imageRecCounter = 0;
-                startActivity(new Intent(getApplicationContext(), ImageRecognition.class));
+                startActivity(new Intent(getApplicationContext(), ImageRecognition_v2.class));
             }
         });
 
@@ -55,7 +55,7 @@ MainActivity extends AppCompatActivity {
                 mapCounter = 0;
                 startActivity(new Intent(getApplicationContext(), MapsActivity.class));
 
-                Intent mStartActivity = new Intent(getApplicationContext(), ImageRecognition.class);
+                Intent mStartActivity = new Intent(getApplicationContext(), ImageRecognition_v2.class);
                 int mPendingIntentId = 123456;
                 PendingIntent mPendingIntent = PendingIntent.getActivity(getApplicationContext(), mPendingIntentId,mStartActivity, PendingIntent.FLAG_CANCEL_CURRENT);
                 AlarmManager mgr = (AlarmManager)getApplicationContext().getSystemService(Context.ALARM_SERVICE);

@@ -1,4 +1,4 @@
-package com.nyit.seniordesignproject.conciousgps;
+package com.nyit.seniordesignproject.consciousgps;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.nyit.seniordesignproject.conciousgps", appContext.getPackageName());
+        assertEquals("com.nyit.seniordesignproject.consciousgps", appContext.getPackageName());
     }
 }
