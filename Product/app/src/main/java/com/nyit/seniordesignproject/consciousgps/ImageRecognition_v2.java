@@ -23,17 +23,29 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.ml.common.FirebaseMLException;
+import com.google.firebase.ml.custom.FirebaseModelDataType;
 import com.google.firebase.ml.custom.FirebaseModelInputOutputOptions;
 import com.google.firebase.ml.custom.FirebaseModelInputs;
 import com.google.firebase.ml.custom.FirebaseModelInterpreter;
+import com.google.firebase.ml.custom.FirebaseModelManager;
+import com.google.firebase.ml.custom.FirebaseModelOptions;
 import com.google.firebase.ml.custom.FirebaseModelOutputs;
+import com.google.firebase.ml.custom.model.FirebaseCloudModelSource;
+import com.google.firebase.ml.custom.model.FirebaseLocalModelSource;
+import com.google.firebase.ml.custom.model.FirebaseModelDownloadConditions;
 import com.google.firebase.ml.vision.FirebaseVision;
+import com.google.firebase.ml.vision.cloud.FirebaseVisionCloudDetectorOptions;
+import com.google.firebase.ml.vision.cloud.label.FirebaseVisionCloudLabel;
+import com.google.firebase.ml.vision.cloud.label.FirebaseVisionCloudLabelDetector;
 import com.google.firebase.ml.vision.common.FirebaseVisionImage;
 import com.google.firebase.ml.vision.document.FirebaseVisionDocumentText;
 import com.google.firebase.ml.vision.document.FirebaseVisionDocumentTextRecognizer;
 import com.google.firebase.ml.vision.face.FirebaseVisionFace;
 import com.google.firebase.ml.vision.face.FirebaseVisionFaceDetector;
 import com.google.firebase.ml.vision.face.FirebaseVisionFaceDetectorOptions;
+import com.google.firebase.ml.vision.label.FirebaseVisionLabel;
+import com.google.firebase.ml.vision.label.FirebaseVisionLabelDetector;
+import com.google.firebase.ml.vision.label.FirebaseVisionLabelDetectorOptions;
 import com.google.firebase.ml.vision.text.FirebaseVisionText;
 import com.google.firebase.ml.vision.text.FirebaseVisionTextRecognizer;
 import com.nyit.seniordesignproject.consciousgps.GraphicOverlay.Graphic;
@@ -48,6 +60,7 @@ import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.PriorityQueue;
 
@@ -72,7 +85,7 @@ public class ImageRecognition_v2 extends AppCompatActivity implements AdapterVie
      * Name of the model file hosted with Firebase.
      */
     private static final String HOSTED_MODEL_NAME = "cloud_model_1";
-    // private static final String LOCAL_MODEL_ASSET = "mobilenet_v1_1.0_224_quant.tflite";
+    private static final String LOCAL_MODEL_ASSET = "mobilenet_v1_1.0_224_quant.tflite";
     /**
      * Name of the label file stored in Assets.
      */
@@ -104,7 +117,7 @@ public class ImageRecognition_v2 extends AppCompatActivity implements AdapterVie
     private Button mTextButton;
     private Button mFaceButton;
     private Button mCloudButton;
-    // private Button mRunCustomModelButton;
+    private Button mRunCustomModelButton;
     private Bitmap mSelectedImage;
     private GraphicOverlay mGraphicOverlay;
     // Max width (portrait mode)
@@ -149,7 +162,7 @@ public class ImageRecognition_v2 extends AppCompatActivity implements AdapterVie
         mTextButton = findViewById(R.id.button_text);
         mFaceButton = findViewById(R.id.button_face);
         mCloudButton = findViewById(R.id.button_cloud_text);
-        //mRunCustomModelButton = findViewById(R.id.button_run_custom_model);
+        mRunCustomModelButton = findViewById(R.id.button_run_custom_model);
 
         mGraphicOverlay = findViewById(R.id.graphic_overlay);
 
@@ -171,12 +184,13 @@ public class ImageRecognition_v2 extends AppCompatActivity implements AdapterVie
                 runCloudTextRecognition();
             }
         });
-//        mRunCustomModelButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                runModelInference();
-//            }
-//        });
+        mRunCustomModelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //runModelInference();
+                labelImagesCloud(FirebaseVisionImage.fromBitmap(mSelectedImage));
+            }
+        });
         Spinner dropdown = findViewById(R.id.spinner);
         String[] items = new String[]{"Test Image 1 (Text)", "Test Image 2 (Text)", "Test Image 3" +
                 " (Face)", "Test Image 4 (Object)", "Test Image 5 (Object)"};
@@ -184,8 +198,152 @@ public class ImageRecognition_v2 extends AppCompatActivity implements AdapterVie
                 .simple_spinner_dropdown_item, items);
         dropdown.setAdapter(adapter);
         dropdown.setOnItemSelectedListener(this);
-//        initCustomModel();
+        initCustomModel();
     }
+
+//    private void runImageLabeling(Bitmap bitmap) {
+//        //Create a FirebaseVisionImage
+//        FirebaseVisionImage image = FirebaseVisionImage.fromBitmap(bitmap);
+//
+//        //Get access to an instance of FirebaseImageDetector
+//        FirebaseVisionCloudLabelDetector detector = FirebaseVision.getInstance()
+//                .getVisionCloudLabelDetector();
+//
+//        //Use the detector to detect the labels inside the image
+//        Task<List<FirebaseVisionLabel>> result =
+//                detector.detectInImage(image)
+//                        .addOnSuccessListener(
+//                                new OnSuccessListener<List<FirebaseVisionLabel>>() {
+//                                    @Override
+//                                    public void onSuccess(List<FirebaseVisionLabel> labels) {
+//                                        // Task completed successfully
+//                                        // ...
+//                                    }
+//                                })
+//                        .addOnFailureListener(
+//                                new OnFailureListener() {
+//                                    @Override
+//                                    public void onFailure(@NonNull Exception e) {
+//                                        // Task failed with an exception
+//                                        // ...
+//                                    }
+//                                });
+//            Toast.makeText(baseContext, "Sorry, something went wrong!", Toast.LENGTH_SHORT).show()
+//        }
+//    }
+
+    private void labelImages(FirebaseVisionImage image) {
+        // [START set_detector_options]
+        FirebaseVisionLabelDetectorOptions options =
+                new FirebaseVisionLabelDetectorOptions.Builder()
+                        .setConfidenceThreshold(0.8f)
+                        .build();
+        // [END set_detector_options]
+
+        // [START get_detector_default]
+        FirebaseVisionLabelDetector detector = FirebaseVision.getInstance()
+                .getVisionLabelDetector();
+        // [END get_detector_default]
+
+        /*
+        // [START get_detector_options]
+        // Or, to set the minimum confidence required:
+        FirebaseVisionLabelDetector detector = FirebaseVision.getInstance()
+                .getVisionLabelDetector(options);
+        // [END get_detector_options]
+        */
+
+        // [START run_detector]
+        Task<List<FirebaseVisionLabel>> result =
+                detector.detectInImage(image)
+                        .addOnSuccessListener(
+                                new OnSuccessListener<List<FirebaseVisionLabel>>() {
+                                    @Override
+                                    public void onSuccess(List<FirebaseVisionLabel> labels) {
+                                        // Task completed successfully
+                                        // [START_EXCLUDE]
+                                        // [START get_labels]
+                                        for (FirebaseVisionLabel label : labels) {
+                                            String text = label.getLabel();
+                                            String entityId = label.getEntityId();
+                                            float confidence = label.getConfidence();
+                                        }
+                                        // [END get_labels]
+                                        // [END_EXCLUDE]
+                                    }
+                                })
+                        .addOnFailureListener(
+                                new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        // Task failed with an exception
+                                        // ...
+                                    }
+                                });
+        // [END run_detector]
+    }
+
+    private void labelImagesCloud(FirebaseVisionImage image) {
+        // [START set_detector_options_cloud]
+        FirebaseVisionCloudDetectorOptions options = new FirebaseVisionCloudDetectorOptions.Builder()
+                .setModelType(FirebaseVisionCloudDetectorOptions.LATEST_MODEL)
+                .setMaxResults(30)
+                .build();
+        // [END set_detector_options_cloud]
+
+        // [START get_detector_cloud]
+        FirebaseVisionCloudLabelDetector detector = FirebaseVision.getInstance()
+                .getVisionCloudLabelDetector();
+        // Or, to change the default settings:
+        // FirebaseVisionCloudLabelDetector detector = FirebaseVision.getInstance()
+        //         .getVisionCloudLabelDetector(options);
+        // [END get_detector_cloud]
+
+        // [START run_detector_cloud]
+        Task<List<FirebaseVisionCloudLabel>> result =
+                detector.detectInImage(image)
+                        .addOnSuccessListener(
+                                new OnSuccessListener<List<FirebaseVisionCloudLabel>>() {
+                                    @Override
+                                    public void onSuccess(List<FirebaseVisionCloudLabel> labels) {
+                                        // Task completed successfully
+                                        // [START_EXCLUDE]
+                                        // [START get_labels_cloud]
+                                        //Jump 1
+                                        //  mGraphicOverlay.clear();
+                                        mLabelList.clear();
+                                        int i = 0;
+                                        for (FirebaseVisionCloudLabel label : labels) {
+                                            String text = label.getLabel();
+                                            String entityId = label.getEntityId();
+                                            float confidence = label.getConfidence();
+                                            mLabelList.add(String.format(Locale.US, "%s\nConfidence: %.3f", text, confidence));
+                                            Log.d("Label List", String.format(Locale.US, "%s\n", mLabelList.get(i++)));
+
+                                        }
+
+                                        i = 0;
+                                        Log.d("Label Size", String.format(Locale.US, "%d", labels.size()));
+
+                                        Graphic labelGraphic = new LabelGraphic
+                                                (mGraphicOverlay, mLabelList);
+                                        mGraphicOverlay.add(labelGraphic);
+                                        // [END get_labels_cloud]
+                                        // [END_EXCLUDE]
+                                    }
+                                })
+                        .addOnFailureListener(
+                                new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        // Task failed with an exception
+                                        // ...
+                                    }
+                                });
+        // [END run_detector_cloud]
+    }
+
+
 
     private void runTextRecognition() {
         FirebaseVisionImage image = FirebaseVisionImage.fromBitmap(mSelectedImage);
@@ -278,46 +436,46 @@ public class ImageRecognition_v2 extends AppCompatActivity implements AdapterVie
         }
     }
 
-//    private void initCustomModel() {
-//        mLabelList = loadLabelList(this);
-//
-//        int[] inputDims = {DIM_BATCH_SIZE, DIM_IMG_SIZE_X, DIM_IMG_SIZE_Y, DIM_PIXEL_SIZE};
-//        int[] outputDims = {DIM_BATCH_SIZE, mLabelList.size()};
-//        try {
-//            mDataOptions =
-//                    new FirebaseModelInputOutputOptions.Builder()
-//                            .setInputFormat(0, FirebaseModelDataType.BYTE, inputDims)
-//                            .setOutputFormat(0, FirebaseModelDataType.BYTE, outputDims)
-//                            .build();
-//            FirebaseModelDownloadConditions conditions = new FirebaseModelDownloadConditions
-//                    .Builder()
-//                    .requireWifi()
-//                    .build();
-//            FirebaseCloudModelSource cloudSource = new FirebaseCloudModelSource.Builder
-//                    (HOSTED_MODEL_NAME)
-//                    .enableModelUpdates(true)
-//                    .setInitialDownloadConditions(conditions)
-//                    .setUpdatesDownloadConditions(conditions)  // You could also specify
-//                    // different conditions
-//                    // for updates
-//                    .build();
-//            FirebaseLocalModelSource localSource =
-//                    new FirebaseLocalModelSource.Builder("asset")
-//                            .setAssetFilePath(LOCAL_MODEL_ASSET).build();
-//            FirebaseModelManager manager = FirebaseModelManager.getInstance();
-//            manager.registerCloudModelSource(cloudSource);
-//            manager.registerLocalModelSource(localSource);
-//            FirebaseModelOptions modelOptions =
-//                    new FirebaseModelOptions.Builder()
-//                            .setCloudModelName(HOSTED_MODEL_NAME)
-//                            .setLocalModelName("asset")
-//                            .build();
-//            mInterpreter = FirebaseModelInterpreter.getInstance(modelOptions);
-//        } catch (FirebaseMLException e) {
-//            showToast("Error while setting up the model");
-//            e.printStackTrace();
-//        }
-//    }
+    private void initCustomModel() {
+        mLabelList = loadLabelList(this);
+
+        int[] inputDims = {DIM_BATCH_SIZE, DIM_IMG_SIZE_X, DIM_IMG_SIZE_Y, DIM_PIXEL_SIZE};
+        int[] outputDims = {DIM_BATCH_SIZE, mLabelList.size()};
+        try {
+            mDataOptions =
+                    new FirebaseModelInputOutputOptions.Builder()
+                            .setInputFormat(0, FirebaseModelDataType.BYTE, inputDims)
+                            .setOutputFormat(0, FirebaseModelDataType.BYTE, outputDims)
+                            .build();
+            FirebaseModelDownloadConditions conditions = new FirebaseModelDownloadConditions
+                    .Builder()
+                    .requireWifi()
+                    .build();
+            FirebaseCloudModelSource cloudSource = new FirebaseCloudModelSource.Builder
+                    (HOSTED_MODEL_NAME)
+                    .enableModelUpdates(true)
+                    .setInitialDownloadConditions(conditions)
+                    .setUpdatesDownloadConditions(conditions)  // You could also specify
+                    // different conditions
+                    // for updates
+                    .build();
+            FirebaseLocalModelSource localSource =
+                    new FirebaseLocalModelSource.Builder("asset")
+                            .setAssetFilePath(LOCAL_MODEL_ASSET).build();
+            FirebaseModelManager manager = FirebaseModelManager.getInstance();
+            manager.registerCloudModelSource(cloudSource);
+            manager.registerLocalModelSource(localSource);
+            FirebaseModelOptions modelOptions =
+                    new FirebaseModelOptions.Builder()
+                            .setCloudModelName(HOSTED_MODEL_NAME)
+                            .setLocalModelName("asset")
+                            .build();
+            mInterpreter = FirebaseModelInterpreter.getInstance(modelOptions);
+        } catch (FirebaseMLException e) {
+            showToast("Error while setting up the model");
+            e.printStackTrace();
+        }
+    }
 
     private void runModelInference() {
         if (mInterpreter == null) {
@@ -406,6 +564,18 @@ public class ImageRecognition_v2 extends AppCompatActivity implements AdapterVie
             }
         }
     }
+
+//    private void runCloudLabelDetection() {
+//
+//    }
+
+//    private void processCloudLabelDetectionResult(FirebaseVisionDocumentText text) {
+//        // Task completed successfully
+//        if (text == null) {
+//            showToast("No labels found");
+//            return;
+//        }
+//    }
 
     /**
      * Gets the top labels in the results.

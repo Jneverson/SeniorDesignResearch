@@ -48,7 +48,8 @@ public class LabelGraphic extends GraphicOverlay.Graphic {
     @Override
     public synchronized void draw(Canvas canvas) {
         float x = overlay.getWidth() / 4.0f;
-        float y = overlay.getHeight() / 4.0f;
+        //Changed divisor from 4.0f to 2.0f to lower canvas
+        float y = overlay.getHeight() / 2.0f;
 
         for (String label : labels) {
             drawTextWithBackground(label, x, y, new TextPaint(textPaint), bgPaint, canvas);
