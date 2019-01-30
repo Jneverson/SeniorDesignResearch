@@ -696,22 +696,22 @@ public class ImageRecognition_v2 extends AppCompatActivity implements AdapterVie
             case 0:
                 mSelectedImage = getBitmapFromAsset(this, "bus.jpg");
                 break;
-//            case 1:
-//                // Whatever you want to happen when the thrid item gets selected
-//                mSelectedImage = getBitmapFromAsset(this, "nl2.jpg");
-//                break;
-//            case 2:
-//                // Whatever you want to happen when the thrid item gets selected
-//                mSelectedImage = getBitmapFromAsset(this, "grace_hopper.jpg");
-//                break;
-//            case 3:
-//                // Whatever you want to happen when the thrid item gets selected
-//                mSelectedImage = getBitmapFromAsset(this, "tennis.jpg");
-//                break;
-//            case 4:
-//                // Whatever you want to happen when the thrid item gets selected
-//                mSelectedImage = getBitmapFromAsset(this, "mountain.jpg");
-//                break;
+            case 1:
+                // Whatever you want to happen when the thrid item gets selected
+                mSelectedImage = getBitmapFromAsset(this, "photo_1.jpg");
+                break;
+            case 2:
+                // Whatever you want to happen when the thrid item gets selected
+                mSelectedImage = getBitmapFromAsset(this, "photo_2.jpg");
+                break;
+            case 3:
+                // Whatever you want to happen when the thrid item gets selected
+                mSelectedImage = getBitmapFromAsset(this, "photo_3.jpg");
+                break;
+            case 4:
+                // Whatever you want to happen when the thrid item gets selected
+                mSelectedImage = getBitmapFromAsset(this, "photo_5.jpg");
+                break;
         }
         if (mSelectedImage != null) {
             // Get the dimensions of the View
