@@ -9,7 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 
 public class
 MainActivity extends AppCompatActivity {
-    private static int buttonCounter = 0;
+   // private static int buttonCounter = 0;
     private static int mapCounter = 0;
     private static int imageRecCounter = 0;
 
@@ -41,17 +41,10 @@ MainActivity extends AppCompatActivity {
 //            }
 //        });
 
-        findViewById(R.id.imageRecButton).setOnClickListener(b -> {
-            imageRecCounter++;
-            if (imageRecCounter >= 5) {
-                imageRecCounter = 0;
-                startActivity(new Intent(getApplicationContext(), ImageRecognition.class));
-            }
-        });
 
         findViewById(R.id.mapsButton).setOnClickListener(b -> {
             mapCounter++;
-            if (mapCounter >= 5) {
+            if (mapCounter >= 0) {
                 mapCounter = 0;
                 startActivity(new Intent(getApplicationContext(), MapsActivity.class));
 
@@ -59,7 +52,7 @@ MainActivity extends AppCompatActivity {
                 int mPendingIntentId = 123456;
                 PendingIntent mPendingIntent = PendingIntent.getActivity(getApplicationContext(), mPendingIntentId,mStartActivity, PendingIntent.FLAG_CANCEL_CURRENT);
                 AlarmManager mgr = (AlarmManager)getApplicationContext().getSystemService(Context.ALARM_SERVICE);
-                mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 7000, mPendingIntent);
+                mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 10000, mPendingIntent);
                 //System.exit(0);
             }
         });

@@ -123,7 +123,7 @@ public class ImageRecognition extends AppCompatActivity {
 
         findViewById(R.id.mainButton).setOnClickListener(b -> {
             buttonCounter++;
-            if (buttonCounter >= 5) {
+            if (buttonCounter >= 0) {
                 buttonCounter = 0;
                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
             }

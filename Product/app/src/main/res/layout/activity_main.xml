@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout android:id="@+id/RelativeLayout01"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,32 +10,10 @@
     tools:context=".MainActivity">
 
     <Button
-        android:id="@+id/imageRecButton"
-        android:layout_width="286dp"
-        android:layout_height="207dp"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="113dp"
-        android:layout_marginEnd="50dp"
-        android:layout_marginBottom="8dp"
-        android:text="IMAGE RECOGNITION"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mapsButton"
-        app:layout_constraintVertical_bias="0.051" />
-
-    <Button
         android:id="@+id/mapsButton"
-        android:layout_width="286dp"
-        android:layout_height="207dp"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="60dp"
-        android:layout_marginEnd="50dp"
-        android:text="MAPS"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-</android.support.constraint.ConstraintLayout>
+        android:layout_width="300sp"
+        android:layout_height="150sp"
+        android:layout_centerInParent="true"
+        android:text="Start Test"
+/>
+</RelativeLayout>

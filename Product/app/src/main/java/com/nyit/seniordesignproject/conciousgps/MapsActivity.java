@@ -49,7 +49,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         //mMap.addMarker(new MarkerOptions().position(current).title("Marker in Current Location"));
        // mMap.moveCamera(CameraUpdateFactory.newLatLng(current));
 
-        Uri gmmIntentUri = Uri.parse("google.navigation:q= Bus+ Station &mode=w");
+        Uri gmmIntentUri = Uri.parse("google.navigation:q= Bus + Station &mode=w");
         Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
         mapIntent.setPackage("com.google.android.apps.maps");
         startActivity(mapIntent);
