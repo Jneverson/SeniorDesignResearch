@@ -11,4 +11,9 @@
 
     <string name="image_picker_error">Something is wrong with that image. Pick a different one please.</string>
     <string name="title_activity_maps">Map</string>
+    <string name="find_objects_button">find_objects_button</string>
+    <string name="find_text_cloud_button">find_text_cloud_button</string>
+    <string name="find_face_contour_button">find_face_contour_button</string>
+    <string name="find_text_button">find_text_button</string>
+    <string name="select_image_for_text_recognition">select_image_for_text_recognition</string>
 </resources>

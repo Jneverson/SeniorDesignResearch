@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.nyit.seniordesignproject.conciousgps;
+package com.nyit.seniordesignproject.consciousgps;
 
 import android.app.Activity;
 import android.content.pm.PackageManager;

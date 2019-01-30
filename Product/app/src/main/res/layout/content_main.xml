@@ -9,7 +9,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.nyit.seniordesignproject.conciousgps.ImageRecognition"
+    tools:context="com.nyit.seniordesignproject.consciousgps.ImageRecognition"
     tools:showIn="@layout/image_recognition_main">
 
     <ScrollView

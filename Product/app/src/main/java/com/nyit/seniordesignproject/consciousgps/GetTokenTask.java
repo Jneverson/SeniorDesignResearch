@@ -1,5 +1,5 @@
 /*
-package com.nyit.seniordesignproject.conciousgps;
+package com.nyit.seniordesignproject.consciousgps;
 
 import android.accounts.Account;
 import android.app.Activity;

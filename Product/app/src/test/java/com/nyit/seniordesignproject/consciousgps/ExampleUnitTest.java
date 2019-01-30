@@ -1,4 +1,4 @@
-package com.nyit.seniordesignproject.conciousgps;
+package com.nyit.seniordesignproject.consciousgps;
 
 import org.junit.Test;
 

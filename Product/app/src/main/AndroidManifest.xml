@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.nyit.seniordesignproject.conciousgps">
+    package="com.nyit.seniordesignproject.consciousgps">
 
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
@@ -14,6 +14,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -35,7 +36,7 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity android:name=".MainActivity">
+        <activity android:name="com.nyit.seniordesignproject.consciousgps.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -43,7 +44,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MapsActivity"
+            android:name="com.nyit.seniordesignproject.consciousgps.MapsActivity"
             android:label="@string/title_activity_maps"
             android:theme="@style/AppTheme.NoActionBar">
 
@@ -57,7 +58,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ImageRecognition"
+            android:name="com.nyit.seniordesignproject.consciousgps.ImageRecognition"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -84,6 +85,18 @@
             android:name="org.apache.http.legacy"
             android:required="false" />
 
+        <activity
+            android:name="com.nyit.seniordesignproject.consciousgps.ImageRecognition_v2"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
     </application>
+
 
 </manifest>

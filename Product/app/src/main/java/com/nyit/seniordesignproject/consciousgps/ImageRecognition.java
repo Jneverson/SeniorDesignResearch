@@ -1,4 +1,4 @@
-package com.nyit.seniordesignproject.conciousgps;
+package com.nyit.seniordesignproject.consciousgps;
 /*
  * Copyright 2019 New York Institute of Technology Senior Design All Rights Reserved.
  *

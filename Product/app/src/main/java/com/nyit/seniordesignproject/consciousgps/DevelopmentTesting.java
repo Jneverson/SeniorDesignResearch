@@ -1,5 +1,5 @@
 
-package com.nyit.seniordesignproject.conciousgps;
+package com.nyit.seniordesignproject.consciousgps;
 //public class DevelopmentTesting extends AppCompatActivity {
 //    private int buttonCounter;
 //    private static final String CLOUD_VISION_API_KEY = "AIzaSyBaNhfMlSgQyO3W2BDIMmiH_Ocs4cYNzSw";
